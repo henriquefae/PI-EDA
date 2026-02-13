@@ -1,8 +1,9 @@
-class History:
+class HistoryNode:
     def __init__(self):
         self.m = 0
         self.ones = 0
         self.zeros = 0
+        self.next = None
     
     def add(self, info):
         if info == 1:
@@ -17,3 +18,12 @@ class History:
         self.m = 0
         self.ones = 0
         self.zeros = 0
+
+    def mergeWithNext(self):
+        if self.next is None:
+            return
+        
+        self.m += self.next.m
+        self.ones += self.next.ones
+        self.zeros += self.next.zeros
+        self.next = self.next.next
