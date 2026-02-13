@@ -7,7 +7,7 @@ def sig(p: float,h: HistoryNode,e:float, n: int) -> str:
 
     if (p == 1 / n or p == 1 / 2) and h.ones >= bound:
         return "up"
-    elif (p == 1 / n or p == 1 / 2) and h.zeros >= bound:
+    elif (p == 1 - 1 / n or p == 1 / 2) and h.zeros >= bound:
         return "down"
     else:
         return "stay"
