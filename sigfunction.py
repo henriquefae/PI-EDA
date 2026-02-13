@@ -1,7 +1,7 @@
 import numpy as np
-import History
+from HistoryNode import HistoryNode
 
-def sig(p: float,h: History,e:float, n: int) -> str:
+def sig(p: float,h: HistoryNode,e:float, n: int) -> str:
     bound = p*h.m+e*max(np.ln(n), np.sqrt(np.ln(n)*p*h.m))
 
     if (p == 1 / n or p == 1 / 2) and h.ones >= bound:
