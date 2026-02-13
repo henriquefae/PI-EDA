@@ -1,14 +1,14 @@
 from FrequencyVector import FrequencyVector
-from History import History
+from HistoryNode import HistoryNode
 from Individual import Individual
+from OriginalHistory import OriginalHistory
 from sigfunction import sig
 
-def sigcGA(p: FrequencyVector, histories: list[History], e: float, f, termination_condition):
+def sigcGA(p: FrequencyVector, histories: OriginalHistory, e: float, f, termination_condition):
     """sig-cGA algorithm"""
     n = len(p)
     t = 0
-    for i in range(n):
-        histories[i] = History.reset()
+    histories.reset()
     while not termination_condition(t):
         x_1, x_2 = Individual(n).sample_individual(), Individual(n).sample_individual()
         if f(x_1) > f(x_2):

@@ -34,3 +34,7 @@ class OriginalHistory:
             else:
                 alreadySeenDoubles = False
                 curr = next
+
+    def reset(self):
+        self.m = 0
+        self.head = HistoryNode()
