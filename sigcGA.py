@@ -3,7 +3,7 @@ from OriginalHistory import OriginalHistory
 from Individual import *
 from sigfunction import sig
 from HistoryNode import HistoryNode
-from FitnessFunction import FitnessFunction
+from FitnessFunctions import FitnessFunction
 
 def scan_history_for_significance(p_i: float, history: OriginalHistory, e: float, n: int) -> str:
     m = 0

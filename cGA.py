@@ -1,6 +1,6 @@
 from FrequencyVector import FrequencyVector
 from Individual import *
-from FitnessFunction import FitnessFunction
+from FitnessFunctions import FitnessFunction
 
 
 def cGA(n: int,k: int, f : FitnessFunction, termination_condition):

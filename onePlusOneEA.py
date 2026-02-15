@@ -1,5 +1,5 @@
 from FrequencyVector import FrequencyVector
-from FitnessFunction import FitnessFunction
+from FitnessFunctions import FitnessFunction
 from Individual import *
 
 
