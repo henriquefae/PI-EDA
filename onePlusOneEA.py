@@ -1,18 +1,23 @@
 from FrequencyVector import FrequencyVector
 from FitnessFunctions import FitnessFunction
 from Individual import *
+from TerminationCriterion import TerminationCriterion
 
 
-def onePlusOneEA(n: int, f : FitnessFunction, termination_condition):
+def onePlusOneEA(n: int, f : FitnessFunction, termination_condition: TerminationCriterion) -> tuple[FrequencyVector, int]:
     p = FrequencyVector(n)                         # p.vector initialized to 0.5
     t = 0
     sampler = IndividualFactory(n)
     sampler.frequency_vector = p
     x = sampler.sample_individual()
 
-    while not termination_condition:
+    while True:
         y = x.mutate_individual(x)
-        if f.evaluate(y) > f.evaluate(x):
-            x = y
+        fx = f.evaluate(x)
+        fy = f.evaluate(y)
+        if fy > fx:
+            x, fx = y, fy
+        if termination_condition(fx):
+            return p, t
 
         t += 1
