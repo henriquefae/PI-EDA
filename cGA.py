@@ -4,12 +4,12 @@ from FitnessFunctions import FitnessFunction
 from TerminationCriterion import TerminationCriterion
 
 
-def cGA(n: int,k: int, f : FitnessFunction, termination_condition: TerminationCriterion) -> tuple[FrequencyVector, int]:
+def cGA(n: int,k: int, f : FitnessFunction, termination_condition: TerminationCriterion, py_rng, np_rng) -> tuple[FrequencyVector, int]:
     p = FrequencyVector(n)                    # p.vector initialized to 0.5
     t = 0
 
     while True:
-        sampler = IndividualFactory(n)
+        sampler = IndividualFactory(n, py_rng, np_rng)
         sampler.frequency_vector = p
         x1 = sampler.sample_individual()
         fx1 = f.evaluate(x1)

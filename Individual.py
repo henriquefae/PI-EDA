@@ -4,9 +4,12 @@ from FrequencyVector import FrequencyVector
 
 class Individual:
 
-    def __init__(self, genome : list[int], frequency_vector: FrequencyVector = None):
+    def __init__(self, genome : list[int], frequency_vector: FrequencyVector = None, py_rng=None, np_rng=None):
         self.n = len(genome)
         self.genome = genome
+        self.py_rng = py_rng
+        self.np_rng = np_rng
+
         if frequency_vector is None:
             self.frequency_vector = FrequencyVector(self.n)
         else:
@@ -14,18 +17,24 @@ class Individual:
     
     def copy(self):
         """Return a deep copy of the individual (genome is copied)."""
-        return Individual(self.genome.copy(), self.frequency_vector)
+        return Individual(
+            self.genome.copy(),
+            self.frequency_vector,
+            self.py_rng,
+            self.np_rng
+        )
 
-    def mutate_individual(self, individual):
+
+    def mutate(self):
         """Apply standard bit mutation to an individual: it flips each bit with a 1 / n mutation rate."""
         # Copy individual
         mutated = self.copy()
 
         # Sample number of flips
-        X = np.random.binomial(n=self.n, p=1/self.n)
+        X = self.np_rng.binomial(n=self.n, p=1/self.n)
 
-        # Random positions
-        flip_positions = random.sample(range(self.n), X)
+        # Sample positions to flip
+        flip_positions = self.py_rng.sample(range(self.n), X)
 
         # Flip bits
         for pos in flip_positions:
@@ -34,10 +43,22 @@ class Individual:
         return mutated
 
 class IndividualFactory:
-    def __init__(self, n: int):
+
+    def __init__(self, n: int, py_rng, np_rng):
         self.n = n
         self.frequency_vector = FrequencyVector(self.n)
+        self.py_rng = py_rng
+        self.np_rng = np_rng
 
     def sample_individual(self) -> Individual:
-        genome = [1 if random.random() < p else 0 for p in self.frequency_vector.vector]
-        return Individual(genome)
+        genome = [
+            1 if self.py_rng.random() < p else 0
+            for p in self.frequency_vector.vector
+        ]
+
+        return Individual(
+            genome,
+            self.frequency_vector,
+            self.py_rng,
+            self.np_rng
+        )

@@ -31,14 +31,14 @@ def scan_history_for_significance(p_i: float, history: OriginalHistory, e: float
     return "stay"
 
 
-def sigcGA(n: int, e: float, f : FitnessFunction, termination_condition: TerminationCriterion)-> tuple[FrequencyVector, int]:
+def sigcGA(n: int, e: float, f : FitnessFunction, termination_condition: TerminationCriterion, py_rng, np_rng)-> tuple[FrequencyVector, int]:
     p = FrequencyVector(n)                         # p.vector initialized to 0.5
     histories = [OriginalHistory(n) for _ in range(n)]  # one history per position
     t = 0
 
     while True:
         # sample two individuals according to p
-        sampler = IndividualFactory(n)
+        sampler = IndividualFactory(n, py_rng, np_rng)
         sampler.frequency_vector = p
         x1 = sampler.sample_individual()
         fx1 = f.evaluate(x1)
