@@ -3,6 +3,7 @@ from OriginalHistory import OriginalHistory
 from Individual import *
 from sigfunction import sig
 from HistoryNode import HistoryNode
+from FitnessFunction import FitnessFunction
 
 def scan_history_for_significance(p_i: float, history: OriginalHistory, e: float, n: int) -> str:
     m = 0
@@ -29,7 +30,7 @@ def scan_history_for_significance(p_i: float, history: OriginalHistory, e: float
     return "stay"
 
 
-def sigcGA(n: int, e: float, f, termination_condition):
+def sigcGA(n: int, e: float, f : FitnessFunction, termination_condition):
     p = FrequencyVector(n)                         # p.vector initialized to 0.5
     histories = [OriginalHistory(n) for _ in range(n)]  # one history per position
     t = 0
@@ -42,8 +43,8 @@ def sigcGA(n: int, e: float, f, termination_condition):
         x2 = sampler.sample_individual()
 
         # choose winner x = argmax f
-        fx1 = f(x1)
-        fx2 = f(x2)
+        fx1 = f.evaluate(x1)
+        fx2 = f.evaluate(x2)
         if fx2 > fx1:
             x = x2
         else:
