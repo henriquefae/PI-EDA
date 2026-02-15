@@ -1,6 +1,6 @@
 from FrequencyVector import FrequencyVector
 from OriginalHistory import OriginalHistory
-from Individual import Individual
+from Individual import *
 from sigfunction import sig
 from HistoryNode import HistoryNode
 
@@ -36,7 +36,7 @@ def sigcGA(n: int, e: float, f, termination_condition):
 
     while not termination_condition:
         # sample two individuals according to p
-        sampler = Individual(n)
+        sampler = IndividualFactory(n)
         sampler.frequency_vector = p
         x1 = sampler.sample_individual()
         x2 = sampler.sample_individual()
