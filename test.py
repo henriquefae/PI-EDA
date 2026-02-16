@@ -17,7 +17,7 @@ from sigcGA import sigcGA
 from onePlusOneEA import onePlusOneEA
 
 
-# -------------------- Config objects --------------------
+#  Config objects 
 
 @dataclass(frozen=True)
 class AlgoConfig:
@@ -43,7 +43,7 @@ class RunResult:
     evaluations: int               # IMPORTANT: call_count
 
 
-# -------------------- Helpers --------------------
+#  Helpers 
 
 def parse_grid(s: str, kind: str) -> list[float]:
     """
@@ -90,7 +90,7 @@ def make_termination(fitness, n: int, budget: int):
     return TerminationCriterion(fitness=fitness, n=n, budget=budget)
 
 
-# -------------------- Single run --------------------
+#  Single run 
 
 def run_once(cfg: ExperimentConfig, seed: int) -> RunResult:
     py_rng = random.Random(seed)
@@ -124,7 +124,7 @@ def run_once(cfg: ExperimentConfig, seed: int) -> RunResult:
     )
 
 
-# -------------------- Multi runs --------------------
+#  Multi runs 
 
 def iter_seeds(base_seed: int, count: int) -> Iterable[int]:
     for i in range(count):
@@ -144,7 +144,7 @@ def run_grid(configs: list[ExperimentConfig], repetitions: int, base_seed: int) 
     return all_results
 
 
-# -------------------- Output / Aggregation --------------------
+#  Output / Aggregation 
 
 def write_csv(path: str, results: list[RunResult]) -> None:
     if not results:
@@ -201,7 +201,7 @@ def plot_sweep(
     plt.close()
 
 
-# -------------------- CLI main --------------------
+#  CLI main 
 
 def main():
     ap = argparse.ArgumentParser()
@@ -379,8 +379,9 @@ if __name__ == "__main__":
 
 
 """""
+Example usage:
 
-python test.py --mode sweep_param --algo sigcGA --fitness OneMax --n 100 --budget 5000 --reps 2 --eps_grid "2, 1, 0.5, 0.05" --out_csv results_sigcga_eps_OneMax.csv --out_plot plot_sigcga_eps_OneMax.png
+python test.py --mode sweep_param --algo sigcGA --fitness OneMax --n 100 --budget 5000 --reps 2 --eps_grid "1, 0.5, 0.05, 0.005, 0.0005" --out_csv results_sigcga_eps_OneMax.csv --out_plot plot_sigcga_eps_OneMax.png
 
 """""
 
